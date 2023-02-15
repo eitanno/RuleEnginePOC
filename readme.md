@@ -12,6 +12,7 @@ All VSCode exntensions
 1.	https://dotnet.microsoft.com/en-us/download/dotnet/6.0
 2.	https://dotnet.microsoft.com/en-us/download/dotnet/7.0
 
+
 All nugget deps and subdeps
 ======
 
