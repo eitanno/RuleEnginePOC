@@ -35,17 +35,12 @@ public class MainEngine
 
     async public Task<List<RuleResultTree>> runWorkflow(string workflowName, ExpandoObject input)
     {
-        Console.WriteLine("Starting tax rate rules");
-
         var jsonWorkflows = File.ReadAllText(Path.Combine("..", "assets", "MasRechishaFlows2023.json"));
         RulesEngine.Models.Workflow[] workflows = JsonConvert.DeserializeObject<RulesEngine.Models.Workflow[]>(jsonWorkflows);
 
         var taxRateEngine = new RulesEngine.RulesEngine(workflows);
 
         return await taxRateEngine.ExecuteAllRulesAsync(workflowName, input);
-
-
-
     }
     private double printInputRulesResult(List<RuleResultTree> response)
     {
