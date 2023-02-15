@@ -1,1 +1,94 @@
-[{"WorkflowName":"Discount","WorkflowsToInject":null,"GlobalParams":null,"Rules":[{"RuleName":"GiveDiscount10","Properties":null,"Operator":null,"ErrorMessage":"One or more adjust rules failed.","Enabled":true,"RuleExpressionType":"LambdaExpression","WorkflowsToInject":null,"Rules":null,"LocalParams":null,"Expression":"input1.country == \"india\" AND input1.loyaltyFactor <= 2 AND input1.totalPurchasesToDate >= 5000","Actions":null,"SuccessEvent":"10"},{"RuleName":"GiveDiscount20","Properties":null,"Operator":null,"ErrorMessage":"One or more adjust rules failed.","Enabled":true,"RuleExpressionType":"LambdaExpression","WorkflowsToInject":null,"Rules":null,"LocalParams":null,"Expression":"input1.country == \"india\" AND input1.loyaltyFactor <= 2 AND input1.totalPurchasesToDate >= 5000","Actions":null,"SuccessEvent":"20"},{"RuleName":"GiveDiscount35NestedAndExample","Properties":null,"Operator":"AndAlso","ErrorMessage":"One or more adjust rules failed.","Enabled":true,"RuleExpressionType":"LambdaExpression","WorkflowsToInject":null,"Rules":[{"RuleName":"IsLoyal","Properties":null,"Operator":null,"ErrorMessage":"One or more adjust rules failed.","Enabled":true,"RuleExpressionType":"LambdaExpression","WorkflowsToInject":null,"Rules":null,"LocalParams":null,"Expression":"input1.country == \"india\"","Actions":null,"SuccessEvent":null},{"RuleName":"AndHasTotalPurchased100000","Properties":null,"Operator":null,"ErrorMessage":"One or more adjust rules failed.","Enabled":true,"RuleExpressionType":"LambdaExpression","WorkflowsToInject":null,"Rules":null,"LocalParams":null,"Expression":"input1.loyaltyFactor <= 2","Actions":null,"SuccessEvent":null},{"RuleName":"AndOtherConditions","Properties":null,"Operator":null,"ErrorMessage":"One or more adjust rules failed.","Enabled":true,"RuleExpressionType":"LambdaExpression","WorkflowsToInject":null,"Rules":null,"LocalParams":null,"Expression":"input1.totalPurchasesToDate < 4000","Actions":null,"SuccessEvent":null}],"LocalParams":null,"Expression":null,"Actions":null,"SuccessEvent":"35"}]}]
+[
+    {
+        "WorkflowName": "Discount",
+        "WorkflowsToInject": null,
+        "GlobalParams": null,
+        "Rules": [
+            {
+                "RuleName": "GiveDiscount10",
+                "Properties": null,
+                "Operator": null,
+                "ErrorMessage": "One or more adjust rules failed.",
+                "Enabled": true,
+                "RuleExpressionType": "LambdaExpression",
+                "WorkflowsToInject": null,
+                "Rules": null,
+                "LocalParams": null,
+                "Expression": "input1.country == \"india\" AND input1.loyaltyFactor <= 2 AND input1.totalPurchasesToDate >= 5000",
+                "Actions": null,
+                "SuccessEvent": "10"
+            },
+            {
+                "RuleName": "GiveDiscount20",
+                "Properties": null,
+                "Operator": null,
+                "ErrorMessage": "One or more adjust rules failed.",
+                "Enabled": true,
+                "RuleExpressionType": "LambdaExpression",
+                "WorkflowsToInject": null,
+                "Rules": null,
+                "LocalParams": null,
+                "Expression": "input1.country == \"india\" AND input1.loyaltyFactor <= 2 AND input1.totalPurchasesToDate >= 5000",
+                "Actions": null,
+                "SuccessEvent": "20"
+            },
+            {
+                "RuleName": "GiveDiscount35NestedAndExample",
+                "Properties": null,
+                "Operator": "AndAlso",
+                "ErrorMessage": "One or more adjust rules failed.",
+                "Enabled": true,
+                "RuleExpressionType": "LambdaExpression",
+                "WorkflowsToInject": null,
+                "Rules": [
+                    {
+                        "RuleName": "IsLoyal",
+                        "Properties": null,
+                        "Operator": null,
+                        "ErrorMessage": "One or more adjust rules failed.",
+                        "Enabled": true,
+                        "RuleExpressionType": "LambdaExpression",
+                        "WorkflowsToInject": null,
+                        "Rules": null,
+                        "LocalParams": null,
+                        "Expression": "input1.country == \"india\"",
+                        "Actions": null,
+                        "SuccessEvent": null
+                    },
+                    {
+                        "RuleName": "AndHasTotalPurchased100000",
+                        "Properties": null,
+                        "Operator": null,
+                        "ErrorMessage": "One or more adjust rules failed.",
+                        "Enabled": true,
+                        "RuleExpressionType": "LambdaExpression",
+                        "WorkflowsToInject": null,
+                        "Rules": null,
+                        "LocalParams": null,
+                        "Expression": "input1.loyaltyFactor <= 2",
+                        "Actions": null,
+                        "SuccessEvent": null
+                    },
+                    {
+                        "RuleName": "AndOtherConditions",
+                        "Properties": null,
+                        "Operator": null,
+                        "ErrorMessage": "One or more adjust rules failed.",
+                        "Enabled": true,
+                        "RuleExpressionType": "LambdaExpression",
+                        "WorkflowsToInject": null,
+                        "Rules": null,
+                        "LocalParams": null,
+                        "Expression": "input1.totalPurchasesToDate < 4000",
+                        "Actions": null,
+                        "SuccessEvent": null
+                    }
+                ],
+                "LocalParams": null,
+                "Expression": null,
+                "Actions": null,
+                "SuccessEvent": "35"
+            }
+        ]
+    }
+]

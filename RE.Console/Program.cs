@@ -4,26 +4,47 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using RulesEngine;
 using RulesEngine.Models;
+using System.Collections.Generic;
+using Newtonsoft.Json.Linq;
 
 // See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+Console.WriteLine("Starting tax rate rules");
 
-var content = File.ReadAllText(Path.Combine("flows.json"));
-RulesEngine.Models.Workflow[] workflows = JsonConvert.DeserializeObject<RulesEngine.Models.Workflow[]>(content);
+var jsonWorkflows = File.ReadAllText(Path.Combine("MasRechishaFlows2023.json"));
+RulesEngine.Models.Workflow[] workflows = JsonConvert.DeserializeObject<RulesEngine.Models.Workflow[]>(jsonWorkflows);
+
+string jsonInput = System.IO.File.ReadAllText(@"MasRechishaInput.json");
+List<ExpandoObject> inputs = JsonConvert.DeserializeObject<List<ExpandoObject>>(jsonInput, new ExpandoObjectConverter());
+
+var taxRateEngine = new RulesEngine.RulesEngine(workflows);
+foreach(Object input in inputs) {
+    double taxRate = 0;
+
+    
+    List<RuleResultTree> taxResponse = await taxRateEngine.ExecuteAllRulesAsync("TaxRate", input);          
+    taxRate = printInputRulesResult(taxResponse);
+    
+    List<RuleResultTree> discountResponse = await taxRateEngine.ExecuteAllRulesAsync("Discount", input);
+    taxRate = taxRate - printInputRulesResult(discountResponse);
+
+    List<RuleResultTree> specialFixRateResponse = await taxRateEngine.ExecuteAllRulesAsync("SpecialFixRate", input);
+    taxRate = taxRate - printInputRulesResult(specialFixRateResponse);
+}
 
 
-string inp1 = System.IO.File.ReadAllText(@"input1.json");
-dynamic inputs = JsonConvert.DeserializeObject<ExpandoObject>(inp1, new ExpandoObjectConverter());
-
-
-var rulesEngine = new RulesEngine.RulesEngine(workflows);
-List<RuleResultTree> response = await rulesEngine.ExecuteAllRulesAsync("Discount", inputs);
-
-
-
-foreach (PropertyDescriptor descriptor in TypeDescriptor.GetProperties(response))
-{
-    string name = descriptor.Name;
-    object value = descriptor.GetValue(response);
-    Console.WriteLine("{0}={1}", name, value);
+double printInputRulesResult(List<RuleResultTree> response) {
+    // TODO: if more then 1
+    return response
+        .Where(r => r.IsSuccess == true)
+        .Select(r => Convert.ToDouble(r.Rule.SuccessEvent))
+        .FirstOrDefault();
+    /*double taxRate = 0;
+    foreach(var ruleResult in response){   
+        if(ruleResult.IsSuccess){
+            string sucessEvent = ruleResult.Rule.SuccessEvent;
+            Console.WriteLine(sucessEvent);
+           taxRate =  Convert.ToDouble(sucessEvent);
+        }
+    }
+    return taxRate;*/
 }
