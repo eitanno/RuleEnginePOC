@@ -8,9 +8,10 @@ All VSCode exntensions
 5.	https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.vscode-dotnet-pack
 
 .NET SDK
-======
+=======
 1.	https://dotnet.microsoft.com/en-us/download/dotnet/6.0
 2.	https://dotnet.microsoft.com/en-us/download/dotnet/7.0
+
 
 
 All nugget deps and subdeps
