@@ -15,6 +15,23 @@ public abstract class GenericEngine
         microsoftRuleEngine = new RulesEngine.RulesEngine(workflows);
     }
 
+    public Workflow[] getWorkflows()
+    {
+        var content = System.IO.File.ReadAllText(Path.Combine("..", "assets", getFlowsFileName()));
+
+        RulesEngine.Models.Workflow[] workflows = JsonConvert.DeserializeObject<RulesEngine.Models.Workflow[]>(content);
+        return workflows;
+    }
+
+    public string updateWorkflows(Workflow[] workflows)
+    {
+        var content = JsonConvert.SerializeObject(workflows);
+        System.IO.File.WriteAllText("../assets/" + getFlowsFileName(), content);
+        return content;
+    }
+
+
+
 
     protected abstract string getFlowsFileName();
 
