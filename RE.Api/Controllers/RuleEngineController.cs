@@ -48,7 +48,7 @@ public class RuleEngineController : ControllerBase
     [HttpPost(Name = "SetExecuteAllRules")]
     public async Task<List<RuleResultTree>> SetAsync(ExpandoObject input)
     {
-        MainEngine engine = new MainEngine();
+        MainEngine engine = new MainEngine("MasRechishaFlows2023.json");
 
         return await engine.runWorkflow("TaxRate", input);
     }

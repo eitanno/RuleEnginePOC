@@ -90,12 +90,8 @@
                 "RuleExpressionType": "LambdaExpression",
                 "Expression": "input1.landType == \"ExclusiveApt\" AND input1.purchasePrice > 19575755"
             }
-            
         ]
     },
-
-
-
     {
         "WorkflowName": "Discount",
         "Rules": [
@@ -178,7 +174,7 @@
                 "ErrorType": "Error",
                 "RuleExpressionType": "LambdaExpression",
                 "Expression": "input1.landType != \"ExclusiveApt\" AND input1.exemptType == \"IDFDisabled\""
-            },            
+            },
             {
                 "RuleName": "CarAccidentExclusive",
                 "SuccessEvent": "0.5",
@@ -258,15 +254,9 @@
                 "ErrorType": "Error",
                 "RuleExpressionType": "LambdaExpression",
                 "Expression": "input1.landType != \"ExclusiveApt\" AND input1.exemptType == \"HolocaustSurvivors\""
-            }         
+            }
         ]
-        
     },
-
-
-
-
-
     {
         "WorkflowName": "SpecialFixRate",
         "Rules": [

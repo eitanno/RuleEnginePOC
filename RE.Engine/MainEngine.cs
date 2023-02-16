@@ -6,18 +6,18 @@ using RulesEngine.Models;
 namespace RE.Engine;
 public class MainEngine
 {
+    private string jsonWorkflows;
     private RulesEngine.RulesEngine taxRateEngine;
 
-    public MainEngine()
+    public MainEngine(string flowsFileName)
     {
-        var jsonWorkflows = File.ReadAllText(Path.Combine("..", "assets", "MasRechishaFlows2023.json"));
+        jsonWorkflows = File.ReadAllText(Path.Combine("..", "assets", flowsFileName));
         RulesEngine.Models.Workflow[] workflows = JsonConvert.DeserializeObject<RulesEngine.Models.Workflow[]>(jsonWorkflows);
         taxRateEngine = new RulesEngine.RulesEngine(workflows);
     }
 
     async public Task<double> run(ExpandoObject input)
     {
-        Console.WriteLine("Starting tax rate rules");
         double taxRate = 0;
 
         List<RuleResultTree> taxResponse = await runWorkflow("TaxRate", input);
@@ -35,7 +35,6 @@ public class MainEngine
 
     async public Task<List<RuleResultTree>> runWorkflow(string workflowName, ExpandoObject input)
     {
-        var jsonWorkflows = File.ReadAllText(Path.Combine("..", "assets", "MasRechishaFlows2023.json"));
         RulesEngine.Models.Workflow[] workflows = JsonConvert.DeserializeObject<RulesEngine.Models.Workflow[]>(jsonWorkflows);
 
         var taxRateEngine = new RulesEngine.RulesEngine(workflows);
