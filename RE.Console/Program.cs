@@ -7,6 +7,7 @@ Console.WriteLine("Start evaluating Mas Rechisha for various inputs - ");
 string jsonInput = System.IO.File.ReadAllText(Path.Combine("..", "assets", @"MasRechishaInput.json"));
 List<ExpandoObject> inputs = JsonConvert.DeserializeObject<List<ExpandoObject>>(jsonInput, new ExpandoObjectConverter());
 
+
 MainEngine engine = new MainEngine("MasRechishaFlows2023.json");
 if (inputs != null)
 {

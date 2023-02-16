@@ -15,52 +15,42 @@
         "name": "Yaarit",
         "landType": "AdditionalApt",
         "purchasePrice": 5500000,
-        "exemptType": "None" 
+        "exemptType": "None"
     },
     {
         "name": "Daniel",
         "landType": "AdditionalApt",
         "purchasePrice": 6500000,
-        "exemptType": "IDFDisabledExclusive" 
+        "exemptType": "IDFDisabledExclusive"
     },
-
     {
         "name": "Yaccov",
         "landType": "ExclusiveApt",
         "purchasePrice": 1900000,
-        "exemptType": "None" 
+        "exemptType": "None"
     },
-
     {
         "name": "Hallel",
-        "landType": "ExclusiveApt",
-        "purchasePrice": 2100000,
-        "exemptType": "NewImmigrant" 
+        "landType": "AdditionalApt",
+        "purchasePrice": 1100000,
+        "exemptType": "NewImmigrant"
     },
-
     {
         "name": "Avishai",
         "landType": "ExclusiveApt",
         "purchasePrice": 4000000,
-        "exemptType": "None" 
+        "exemptType": "None"
     },
-
     {
         "name": "Yuval",
         "landType": "ExclusiveApt",
         "purchasePrice": 8000000,
-        "exemptType": "None" 
+        "exemptType": "None"
     },
-
     {
         "name": "Imanuel",
         "landType": "ExclusiveApt",
         "purchasePrice": 20000000,
-        "exemptType": "None" 
+        "exemptType": "None"
     }
-
-
-
 ]
-
-

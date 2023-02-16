@@ -266,7 +266,7 @@
                 "ErrorMessage": "One or more adjust rules failed.",
                 "ErrorType": "Error",
                 "RuleExpressionType": "LambdaExpression",
-                "Expression": "input1.landType == \"ExclusiveApt\" AND input1.exemptType == \"NewImmigrant\" And input1.purchasePrice <= 1928220 "
+                "Expression": "input1.landType != \"ExclusiveApt\" AND input1.exemptType == \"NewImmigrant\" And input1.purchasePrice <= 1928220 "
             },
             {
                 "RuleName": "NewImmigrantBracket2",
@@ -274,7 +274,7 @@
                 "ErrorMessage": "One or more adjust rules failed.",
                 "ErrorType": "Error",
                 "RuleExpressionType": "LambdaExpression",
-                "Expression": "input1.landType == \"ExclusiveApt\" AND input1.exemptType == \"NewImmigrant\" And input1.purchasePrice > 1928220 "
+                "Expression": "input1.landType != \"ExclusiveApt\" AND input1.exemptType == \"NewImmigrant\" And input1.purchasePrice > 1928220 "
             },
             {
                 "RuleName": "WorkDisabledExclusive",

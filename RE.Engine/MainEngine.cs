@@ -27,15 +27,27 @@ public class MainEngine
         taxRate = taxRate - getFirstSuccessRule(discountResponse);
 
         List<RuleResultTree> specialFixRateResponse = await taxRateEngine.ExecuteAllRulesAsync("SpecialFixRate", input);
-        taxRate = taxRate - getFirstSuccessRule(specialFixRateResponse);
-
+        if (hasSuccesRule(specialFixRateResponse))
+        {
+            taxRate = getFirstSuccessRule(specialFixRateResponse);
+        }
         return taxRate;
     }
 
 
+    private bool hasSuccesRule(List<RuleResultTree> response)
+    {
+        foreach (RuleResultTree res in response)
+        {
+            if (res.IsSuccess)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
     private double getFirstSuccessRule(List<RuleResultTree> response)
     {
-        // TODO: if more then 1
         return response
             .Where(r => r.IsSuccess == true)
             .Select(r => Convert.ToDouble(r.Rule.SuccessEvent))
