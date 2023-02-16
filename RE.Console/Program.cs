@@ -8,7 +8,7 @@ string jsonInput = System.IO.File.ReadAllText(Path.Combine("..", "assets", @"Mas
 List<ExpandoObject> inputs = JsonConvert.DeserializeObject<List<ExpandoObject>>(jsonInput, new ExpandoObjectConverter());
 
 
-MainEngine engine = new MainEngine("MasRechishaFlows2023.json");
+MasRechishaEngine engine = new MasRechishaEngine();
 if (inputs != null)
 {
     inputs.ForEach(async inp => Console.WriteLine(inp.FirstOrDefault(x => x.Key == "name").Value + " taxRate is " + await engine.run(inp)));
