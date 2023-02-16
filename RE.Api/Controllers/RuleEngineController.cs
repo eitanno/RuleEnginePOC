@@ -5,7 +5,6 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using RulesEngine;
 using RulesEngine.Models;
-using Newtonsoft.Json.Linq;
 
 namespace RE.Api.Controllers;
 
@@ -42,24 +41,13 @@ public class RuleEngineController : ControllerBase
     }
 
     [HttpPost(Name = "SetExecuteAllRules")]
-    [Route("executeallrules")]
-    public async Task<List<RuleResultTree>> SetAsync([FromBody] Object[] inputs)
+    public async Task<List<RuleResultTree>> SetAsync(Object input)
     {
         var content = System.IO.File.ReadAllText(Path.Combine("flows.json"));
         RulesEngine.Models.Workflow[] workflows = JsonConvert.DeserializeObject<RulesEngine.Models.Workflow[]>(content);
         var rulesEngine = new RulesEngine.RulesEngine(workflows);
-        var content2 = inputs[0].ToString();
-        Object data = JsonConvert.DeserializeObject<dynamic>(inputs[0].ToString());
-
-
-        List<RuleResultTree> response = await rulesEngine.ExecuteAllRulesAsync("Discount", data);
-
-
+        List<RuleResultTree> response = await rulesEngine.ExecuteAllRulesAsync("Discount", input);
         return response;
     }
-
-
-
-
 
 }

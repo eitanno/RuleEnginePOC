@@ -37,7 +37,11 @@ Git
 `dotnet new webapi -o RE.Api`
 
 `dotnet add package RulesEngine`
+`dotnet add package Newtonsoft.Json`
 
 `dotnet sln add RE.Console`
+`dotnet sln add RE.Engine`
 `dotnet sln add RE.Api`
 `dotnet sln list`
+
+`dotnet add reference ../RE.Engine`

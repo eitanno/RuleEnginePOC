@@ -11,4 +11,8 @@
     <PackageReference Include="RulesEngine" Version="4.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\RE.Engine\RE.Engine.csproj" />
+  </ItemGroup>
+
 </Project>

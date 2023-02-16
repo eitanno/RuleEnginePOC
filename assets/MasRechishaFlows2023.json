@@ -1,0 +1,361 @@
+[
+    {
+        "WorkflowName": "TaxRate",
+        "Rules": [
+            {
+                "RuleName": "NonResidentialWithConstruction",
+                "SuccessEvent": "5",
+                "ErrorMessage": "One or more adjust rules failed.",
+                "ErrorType": "Error",
+                "RuleExpressionType": "LambdaExpression",
+                "Expression": "input1.landType == \"NonResidential\" AND input1.hasConstruction == true"
+            },
+            {
+                "RuleName": "NonResidentialWithoutConstruction",
+                "SuccessEvent": "6",
+                "ErrorMessage": "One or more adjust rules failed.",
+                "ErrorType": "Error",
+                "RuleExpressionType": "LambdaExpression",
+                "Expression": "input1.landType == \"NonResidential\" AND input1.hasConstruction == false"
+            },
+            {
+                "RuleName": "AgriFarmBracket1",
+                "SuccessEvent": "0.5",
+                "ErrorMessage": "One or more adjust rules failed.",
+                "ErrorType": "Error",
+                "RuleExpressionType": "LambdaExpression",
+                "Expression": "input1.landType == \"AgriFarm\" AND input1.purchasePrice <= 504900"
+            },
+            {
+                "RuleName": "AgriFarmBracket2",
+                "SuccessEvent": "5",
+                "ErrorMessage": "One or more adjust rules failed.",
+                "ErrorType": "Error",
+                "RuleExpressionType": "LambdaExpression",
+                "Expression": "input1.landType == \"AgriFarm\" AND input1.purchasePrice <= 504900"
+            },
+            {
+                "RuleName": "AdditionalAptBracket1",
+                "SuccessEvent": "8",
+                "ErrorMessage": "One or more adjust rules failed.",
+                "ErrorType": "Error",
+                "RuleExpressionType": "LambdaExpression",
+                "Expression": "input1.landType == \"AdditionalApt\" AND input1.purchasePrice <= 5872725"
+            },
+            {
+                "RuleName": "AdditionalAptBracket2",
+                "SuccessEvent": "10",
+                "ErrorMessage": "One or more adjust rules failed.",
+                "ErrorType": "Error",
+                "RuleExpressionType": "LambdaExpression",
+                "Expression": "input1.landType == \"AdditionalApt\" AND input1.purchasePrice > 5872725"
+            },
+            {
+                "RuleName": "ExclusiveAptBracket1",
+                "SuccessEvent": "0",
+                "ErrorMessage": "One or more adjust rules failed.",
+                "ErrorType": "Error",
+                "RuleExpressionType": "LambdaExpression",
+                "Expression": "input1.landType == \"ExclusiveApt\" AND input1.purchasePrice <= 1919155"
+            },
+            {
+                "RuleName": "ExclusiveAptBracket2",
+                "SuccessEvent": "3.5",
+                "ErrorMessage": "One or more adjust rules failed.",
+                "ErrorType": "Error",
+                "RuleExpressionType": "LambdaExpression",
+                "Expression": "input1.landType == \"ExclusiveApt\" AND input1.purchasePrice > 1919155 AND input1.purchasePrice <= 2276360"
+            },
+            {
+                "RuleName": "ExclusiveAptBracket3",
+                "SuccessEvent": "5",
+                "ErrorMessage": "One or more adjust rules failed.",
+                "ErrorType": "Error",
+                "RuleExpressionType": "LambdaExpression",
+                "Expression": "input1.landType == \"ExclusiveApt\" AND input1.purchasePrice > 2276360 AND input1.purchasePrice <= 5872725"
+            },
+            {
+                "RuleName": "ExclusiveAptBracket4",
+                "SuccessEvent": "8",
+                "ErrorMessage": "One or more adjust rules failed.",
+                "ErrorType": "Error",
+                "RuleExpressionType": "LambdaExpression",
+                "Expression": "input1.landType == \"ExclusiveApt\" AND input1.purchasePrice > 5872725 AND input1.purchasePrice <= 19575755"
+            },
+            {
+                "RuleName": "ExclusiveAptBracket5",
+                "SuccessEvent": "10",
+                "ErrorMessage": "One or more adjust rules failed.",
+                "ErrorType": "Error",
+                "RuleExpressionType": "LambdaExpression",
+                "Expression": "input1.landType == \"ExclusiveApt\" AND input1.purchasePrice > 19575755"
+            }
+        ]
+    },
+    {
+        "WorkflowName": "Discount",
+        "Rules": [
+            {
+                "RuleName": "DisabledChildBenefitExclusive",
+                "SuccessEvent": "0.5",
+                "ErrorMessage": "One or more adjust rules failed.",
+                "ErrorType": "Error",
+                "RuleExpressionType": "LambdaExpression",
+                "Expression": "input1.landType == \"ExclusiveApt\" AND input1.exemptType == \"DisabledChildBenefit\" Andinput1.purchasePrice > 2500000"
+            },
+            {
+                "RuleName": "DisabledChildBenefitNonExclusive",
+                "SuccessEvent": "0.5",
+                "ErrorMessage": "One or more adjust rules failed.",
+                "ErrorType": "Error",
+                "RuleExpressionType": "LambdaExpression",
+                "Expression": "input1.landType != \"ExclusiveApt\" AND input1.exemptType == \"DisabledChildBenefit\""
+            },
+            {
+                "RuleName": "BlindExclusive",
+                "SuccessEvent": "0.5",
+                "ErrorMessage": "One or more adjust rules failed.",
+                "ErrorType": "Error",
+                "RuleExpressionType": "LambdaExpression",
+                "Expression": "input1.landType == \"ExclusiveApt\" AND input1.exemptType == \"Blind\" Andinput1.purchasePrice > 2500000"
+            },
+            {
+                "RuleName": "BlindNonExclusive",
+                "SuccessEvent": "0.5",
+                "ErrorMessage": "One or more adjust rules failed.",
+                "ErrorType": "Error",
+                "RuleExpressionType": "LambdaExpression",
+                "Expression": "input1.landType != \"ExclusiveApt\" AND input1.exemptType == \"Blind\""
+            },
+            {
+                "RuleName": "DisabledExclusive",
+                "SuccessEvent": "0.5",
+                "ErrorMessage": "One or more adjust rules failed.",
+                "ErrorType": "Error",
+                "RuleExpressionType": "LambdaExpression",
+                "Expression": "input1.landType == \"ExclusiveApt\" AND input1.exemptType == \"Disabled\" Andinput1.purchasePrice > 2500000"
+            },
+            {
+                "RuleName": "DisabledNonExclusive",
+                "SuccessEvent": "0.5",
+                "ErrorMessage": "One or more adjust rules failed.",
+                "ErrorType": "Error",
+                "RuleExpressionType": "LambdaExpression",
+                "Expression": "input1.landType != \"ExclusiveApt\" AND input1.exemptType == \"Disabled\""
+            },
+            {
+                "RuleName": "WorkDisabledExclusive",
+                "SuccessEvent": "0.5",
+                "ErrorMessage": "One or more adjust rules failed.",
+                "ErrorType": "Error",
+                "RuleExpressionType": "LambdaExpression",
+                "Expression": "input1.landType == \"ExclusiveApt\" AND input1.exemptType == \"WorkDisabled\" Andinput1.purchasePrice > 2500000"
+            },
+            {
+                "RuleName": "WorkDisabledNonExclusive",
+                "SuccessEvent": "0.5",
+                "ErrorMessage": "One or more adjust rules failed.",
+                "ErrorType": "Error",
+                "RuleExpressionType": "LambdaExpression",
+                "Expression": "input1.landType != \"ExclusiveApt\" AND input1.exemptType == \"WorkDisabled\""
+            },
+            {
+                "RuleName": "IDFDisabledExclusive",
+                "SuccessEvent": "0.5",
+                "ErrorMessage": "One or more adjust rules failed.",
+                "ErrorType": "Error",
+                "RuleExpressionType": "LambdaExpression",
+                "Expression": "input1.landType == \"ExclusiveApt\" AND input1.exemptType == \"IDFDisabled\" Andinput1.purchasePrice > 2500000"
+            },
+            {
+                "RuleName": "IDFDisabledNonExclusive",
+                "SuccessEvent": "0.5",
+                "ErrorMessage": "One or more adjust rules failed.",
+                "ErrorType": "Error",
+                "RuleExpressionType": "LambdaExpression",
+                "Expression": "input1.landType != \"ExclusiveApt\" AND input1.exemptType == \"IDFDisabled\""
+            },
+            {
+                "RuleName": "CarAccidentExclusive",
+                "SuccessEvent": "0.5",
+                "ErrorMessage": "One or more adjust rules failed.",
+                "ErrorType": "Error",
+                "RuleExpressionType": "LambdaExpression",
+                "Expression": "input1.landType == \"ExclusiveApt\" AND input1.exemptType == \"CarAccident\" Andinput1.purchasePrice > 2500000"
+            },
+            {
+                "RuleName": "CarAccidentNonExclusive",
+                "SuccessEvent": "0.5",
+                "ErrorMessage": "One or more adjust rules failed.",
+                "ErrorType": "Error",
+                "RuleExpressionType": "LambdaExpression",
+                "Expression": "input1.landType != \"ExclusiveApt\" AND input1.exemptType == \"CarAccident\""
+            },
+            {
+                "RuleName": "BereavedFamilyMemberExclusive",
+                "SuccessEvent": "0.5",
+                "ErrorMessage": "One or more adjust rules failed.",
+                "ErrorType": "Error",
+                "RuleExpressionType": "LambdaExpression",
+                "Expression": "input1.landType == \"ExclusiveApt\" AND input1.exemptType == \"BereavedFamilyMember\" Andinput1.purchasePrice > 2500000"
+            },
+            {
+                "RuleName": "BereavedFamilyMemberNonExclusive",
+                "SuccessEvent": "0.5",
+                "ErrorMessage": "One or more adjust rules failed.",
+                "ErrorType": "Error",
+                "RuleExpressionType": "LambdaExpression",
+                "Expression": "input1.landType != \"ExclusiveApt\" AND input1.exemptType == \"BereavedFamilyMember\""
+            },
+            {
+                "RuleName": "HostileCasualtiesExclusive",
+                "SuccessEvent": "0.5",
+                "ErrorMessage": "One or more adjust rules failed.",
+                "ErrorType": "Error",
+                "RuleExpressionType": "LambdaExpression",
+                "Expression": "input1.landType == \"ExclusiveApt\" AND input1.exemptType == \"HostileCasualties\" Andinput1.purchasePrice > 2500000"
+            },
+            {
+                "RuleName": "HostileCasualtiesNonExclusive",
+                "SuccessEvent": "0.5",
+                "ErrorMessage": "One or more adjust rules failed.",
+                "ErrorType": "Error",
+                "RuleExpressionType": "LambdaExpression",
+                "Expression": "input1.landType != \"ExclusiveApt\" AND input1.exemptType == \"HostileCasualties\""
+            },
+            {
+                "RuleName": "MartyrsExclusive",
+                "SuccessEvent": "0.5",
+                "ErrorMessage": "One or more adjust rules failed.",
+                "ErrorType": "Error",
+                "RuleExpressionType": "LambdaExpression",
+                "Expression": "input1.landType == \"ExclusiveApt\" AND input1.exemptType == \"Martyrs\" Andinput1.purchasePrice > 2500000"
+            },
+            {
+                "RuleName": "MartyrsNonExclusive",
+                "SuccessEvent": "0.5",
+                "ErrorMessage": "One or more adjust rules failed.",
+                "ErrorType": "Error",
+                "RuleExpressionType": "LambdaExpression",
+                "Expression": "input1.landType != \"ExclusiveApt\" AND input1.exemptType == \"Martyrs\""
+            },
+            {
+                "RuleName": "HolocaustSurvivorsExclusive",
+                "SuccessEvent": "0.5",
+                "ErrorMessage": "One or more adjust rules failed.",
+                "ErrorType": "Error",
+                "RuleExpressionType": "LambdaExpression",
+                "Expression": "input1.landType == \"ExclusiveApt\" AND input1.exemptType == \"HolocaustSurvivors\" Andinput1.purchasePrice > 2500000"
+            },
+            {
+                "RuleName": "HolocaustSurvivorsNonExclusive",
+                "SuccessEvent": "0.5",
+                "ErrorMessage": "One or more adjust rules failed.",
+                "ErrorType": "Error",
+                "RuleExpressionType": "LambdaExpression",
+                "Expression": "input1.landType != \"ExclusiveApt\" AND input1.exemptType == \"HolocaustSurvivors\""
+            }
+        ]
+    },
+    {
+        "WorkflowName": "SpecialFixRate",
+        "Rules": [
+            {
+                "RuleName": "NewImmigrantBracket1",
+                "SuccessEvent": "0.5",
+                "ErrorMessage": "One or more adjust rules failed.",
+                "ErrorType": "Error",
+                "RuleExpressionType": "LambdaExpression",
+                "Expression": "input1.landType == \"ExclusiveApt\" AND input1.exemptType == \"NewImmigrant\" And input1.purchasePrice <= 1928220 "
+            },
+            {
+                "RuleName": "NewImmigrantBracket2",
+                "SuccessEvent": "5",
+                "ErrorMessage": "One or more adjust rules failed.",
+                "ErrorType": "Error",
+                "RuleExpressionType": "LambdaExpression",
+                "Expression": "input1.landType == \"ExclusiveApt\" AND input1.exemptType == \"NewImmigrant\" And input1.purchasePrice > 1928220 "
+            },
+            {
+                "RuleName": "WorkDisabledExclusive",
+                "SuccessEvent": "0.5",
+                "ErrorMessage": "One or more adjust rules failed.",
+                "ErrorType": "Error",
+                "RuleExpressionType": "LambdaExpression",
+                "Expression": "input1.landType == \"ExclusiveApt\" AND input1.exemptType == \"WorkDisabled\" And input1.purchasePrice < 2500000 "
+            },
+            {
+                "RuleName": "IDFDisabledExclusive",
+                "SuccessEvent": "0.5",
+                "ErrorMessage": "One or more adjust rules failed.",
+                "ErrorType": "Error",
+                "RuleExpressionType": "LambdaExpression",
+                "Expression": "input1.landType == \"ExclusiveApt\" AND input1.exemptType == \"IDFDisabled\" And input1.purchasePrice < 2500000 "
+            },
+            {
+                "RuleName": "CarAccidentExclusive",
+                "SuccessEvent": "0.5",
+                "ErrorMessage": "One or more adjust rules failed.",
+                "ErrorType": "Error",
+                "RuleExpressionType": "LambdaExpression",
+                "Expression": "input1.landType == \"ExclusiveApt\" AND input1.exemptType == \"CarAccident\" And input1.purchasePrice < 2500000 "
+            },
+            {
+                "RuleName": "BereavedFamilyMemberExclusive",
+                "SuccessEvent": "0.5",
+                "ErrorMessage": "One or more adjust rules failed.",
+                "ErrorType": "Error",
+                "RuleExpressionType": "LambdaExpression",
+                "Expression": "input1.landType == \"ExclusiveApt\" AND input1.exemptType == \"BereavedFamilyMember\" And input1.purchasePrice < 2500000 "
+            },
+            {
+                "RuleName": "HostileCasualtiesExclusive",
+                "SuccessEvent": "0.5",
+                "ErrorMessage": "One or more adjust rules failed.",
+                "ErrorType": "Error",
+                "RuleExpressionType": "LambdaExpression",
+                "Expression": "input1.landType == \"ExclusiveApt\" AND input1.exemptType == \"HostileCasualties\" And input1.purchasePrice < 2500000 "
+            },
+            {
+                "RuleName": "MartyrsExclusive",
+                "SuccessEvent": "0.5",
+                "ErrorMessage": "One or more adjust rules failed.",
+                "ErrorType": "Error",
+                "RuleExpressionType": "LambdaExpression",
+                "Expression": "input1.landType == \"ExclusiveApt\" AND input1.exemptType == \"Martyrs\" And input1.purchasePrice < 2500000 "
+            },
+            {
+                "RuleName": "HolocaustSurvivors",
+                "SuccessEvent": "0.5",
+                "ErrorMessage": "One or more adjust rules failed.",
+                "ErrorType": "Error",
+                "RuleExpressionType": "LambdaExpression",
+                "Expression": "input1.landType == \"ExclusiveApt\" AND input1.exemptType == \"HolocaustSurvivors\" And input1.purchasePrice < 2500000 "
+            },
+            {
+                "RuleName": "DisabledChildBenefit",
+                "SuccessEvent": "0.5",
+                "ErrorMessage": "One or more adjust rules failed.",
+                "ErrorType": "Error",
+                "RuleExpressionType": "LambdaExpression",
+                "Expression": "input1.landType == \"ExclusiveApt\" AND input1.exemptType == \"DisabledChildBenefit\" And input1.purchasePrice < 2500000 "
+            },
+            {
+                "RuleName": "Blind",
+                "SuccessEvent": "0.5",
+                "ErrorMessage": "One or more adjust rules failed.",
+                "ErrorType": "Error",
+                "RuleExpressionType": "LambdaExpression",
+                "Expression": "input1.landType == \"ExclusiveApt\" AND input1.exemptType == \"Blind\" And input1.purchasePrice < 2500000 "
+            },
+            {
+                "RuleName": "Disabled",
+                "SuccessEvent": "0.5",
+                "ErrorMessage": "One or more adjust rules failed.",
+                "ErrorType": "Error",
+                "RuleExpressionType": "LambdaExpression",
+                "Expression": "input1.landType == \"ExclusiveApt\" AND input1.exemptType == \"Disabled\" And input1.purchasePrice < 2500000 "
+            }
+        ]
+    }
+]

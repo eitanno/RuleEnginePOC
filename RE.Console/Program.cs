@@ -1,29 +1,15 @@
-﻿using System.ComponentModel;
-using System.Dynamic;
+﻿using System.Dynamic;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using RulesEngine;
-using RulesEngine.Models;
+using RE.Engine;
 
-// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+Console.WriteLine("Start evaluating Mas Rechisha for various inputs - ");
+string jsonInput = System.IO.File.ReadAllText(Path.Combine("..", "assets", @"MasRechishaInput.json"));
+List<ExpandoObject> inputs = JsonConvert.DeserializeObject<List<ExpandoObject>>(jsonInput, new ExpandoObjectConverter());
 
-var content = File.ReadAllText(Path.Combine("flows.json"));
-RulesEngine.Models.Workflow[] workflows = JsonConvert.DeserializeObject<RulesEngine.Models.Workflow[]>(content);
-
-
-string inp1 = System.IO.File.ReadAllText(@"input1.json");
-dynamic inputs = JsonConvert.DeserializeObject<ExpandoObject>(inp1, new ExpandoObjectConverter());
-
-
-var rulesEngine = new RulesEngine.RulesEngine(workflows);
-List<RuleResultTree> response = await rulesEngine.ExecuteAllRulesAsync("Discount", inputs);
-
-
-
-foreach (PropertyDescriptor descriptor in TypeDescriptor.GetProperties(response))
+MainEngine engine = new MainEngine("MasRechishaFlows2023.json");
+if (inputs != null)
 {
-    string name = descriptor.Name;
-    object value = descriptor.GetValue(response);
-    Console.WriteLine("{0}={1}", name, value);
+    inputs.ForEach(async inp => Console.WriteLine(inp.FirstOrDefault(x => x.Key == "name").Value + " taxRate is " + await engine.run(inp)));
 }
+Console.ReadLine();
