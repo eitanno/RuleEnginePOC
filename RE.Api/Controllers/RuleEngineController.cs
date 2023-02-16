@@ -6,6 +6,7 @@ using Newtonsoft.Json.Converters;
 using RulesEngine;
 using RulesEngine.Models;
 using RE.Engine;
+using Newtonsoft.Json.Linq;
 
 namespace RE.Api.Controllers;
 
@@ -27,7 +28,7 @@ public class RuleEngineController : ControllerBase
     [HttpGet(Name = "GetWorkflows")]
     public RulesEngine.Models.Workflow[] Get()
     {
-        var content = System.IO.File.ReadAllText(Path.Combine("flows.json"));
+        var content = System.IO.File.ReadAllText(Path.Combine("..", "assets", "MasRechishaFlows2023Rules.json"));
 
         RulesEngine.Models.Workflow[] workflows = JsonConvert.DeserializeObject<RulesEngine.Models.Workflow[]>(content);
         return workflows;
@@ -37,17 +38,27 @@ public class RuleEngineController : ControllerBase
     public IActionResult Put([FromBody] RulesEngine.Models.Workflow[] workflows)
     {
         var content = JsonConvert.SerializeObject(workflows);
-        System.IO.File.WriteAllText("flows.json", content);
+        System.IO.File.WriteAllText("../assets/MasRechishaFlows2023Rules.json", content);
         return Ok(content);
     }
 
     [HttpPost(Name = "SetExecuteAllRules")]
     [Route("executeallrules")]
-    public async Task<List<RuleResultTree>> SetAsync(ExpandoObject input)
+    public IActionResult SetAsyn([FromBody] Object[] jsonInput)
     {
-        MainEngine engine = new MainEngine("MasRechishaFlows2023.json");
+        var inputs = jsonInput
+            .Select(ji => JsonConvert.
+                DeserializeObject<ExpandoObject>(ji.ToString(), new ExpandoObjectConverter())
+            ).ToList();
 
-        return await engine.runWorkflow("TaxRate", input);
+        MasRechishaEngine engine = new MasRechishaEngine();
+        List<Task<double>> tasks = new List<Task<double>>();
+        inputs.ForEach(i =>
+        {
+            tasks.Add(engine.run(i));
+        });
+
+        return Ok(tasks);
     }
 
 }
