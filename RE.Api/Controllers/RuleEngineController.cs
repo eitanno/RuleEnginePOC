@@ -5,19 +5,14 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using RulesEngine;
 using RulesEngine.Models;
-using RE.Engine;
 
 namespace RE.Api.Controllers;
 
 
 [ApiController]
-[Route("[controller]")]
+[Route("ruleengine")]
 public class RuleEngineController : ControllerBase
 {
-    private static readonly string[] Summaries = new[]
-    {
-        "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-    };
 
     private readonly ILogger<RuleEngineController> _logger;
 
@@ -46,11 +41,13 @@ public class RuleEngineController : ControllerBase
     }
 
     [HttpPost(Name = "SetExecuteAllRules")]
-    public async Task<List<RuleResultTree>> SetAsync(ExpandoObject input)
+    public async Task<List<RuleResultTree>> SetAsync(Object input)
     {
-        MainEngine engine = new MainEngine("MasRechishaFlows2023.json");
-
-        return await engine.runWorkflow("TaxRate", input);
+        var content = System.IO.File.ReadAllText(Path.Combine("flows.json"));
+        RulesEngine.Models.Workflow[] workflows = JsonConvert.DeserializeObject<RulesEngine.Models.Workflow[]>(content);
+        var rulesEngine = new RulesEngine.RulesEngine(workflows);
+        List<RuleResultTree> response = await rulesEngine.ExecuteAllRulesAsync("Discount", input);
+        return response;
     }
 
 }
