@@ -1,6 +1,6 @@
 ﻿using System.Dynamic;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
+using RulesEngine.Actions;
 using RulesEngine.Models;
 
 namespace RE.Engine;
@@ -10,11 +10,23 @@ public abstract class GenericEngine
     protected RulesEngine.RulesEngine microsoftRuleEngine;
     public GenericEngine()
     {
+        // TODO - For efficiency rules should be written nested when possible.
+        // (The above is true if we use first success. If we iterate all rules - it does not matter)
+        // Reading Mas-Rechisha rules file
         string jsonWorkflows = File.ReadAllText(Path.Combine("..", "assets", getFlowsFileName()));
         workflows = JsonConvert.DeserializeObject<RulesEngine.Models.Workflow[]>(jsonWorkflows);
-        microsoftRuleEngine = new RulesEngine.RulesEngine(workflows);
-    }
+        double mrTaxRate = 0;
 
+        //Registaring action to the engine for rule's post execute ation
+        var reSettings = new ReSettings
+        {
+            CustomActions = new Dictionary<string, Func<ActionBase>>{
+            {getActionName(), () => getActionObject() }
+      }
+        };
+        microsoftRuleEngine = new RulesEngine.RulesEngine(workflows, reSettings);
+    }
+    
     public Workflow[] getWorkflows()
     {
         var content = System.IO.File.ReadAllText(Path.Combine("..", "assets", getFlowsFileName()));
@@ -35,6 +47,11 @@ public abstract class GenericEngine
 
     protected abstract string getFlowsFileName();
 
+    protected abstract string getActionName();
+
+    protected abstract ActionBase getActionObject();
+
+
     async public Task<double> run(ExpandoObject input)
     {
         return 0;
@@ -52,12 +69,17 @@ public abstract class GenericEngine
         }
         return false;
     }
-    protected double getSuccessRule(List<RuleResultTree> response)
+    protected void resolveTaxFromRules(List<RuleResultTree> response, TaxResult tax)
     {
-        // TODO what if there is more than one success rule.
-        return response
-            .Where(r => r.IsSuccess == true)
-            .Select(r => Convert.ToDouble(r.Rule.SuccessEvent))
-            .FirstOrDefault();
+
+        var successResponses = response.Where(r => r.IsSuccess == true);
+
+        var successEventValues = successResponses.Select(r => Convert.ToDouble(r.Rule.SuccessEvent));
+        if (successEventValues.Any())
+        {
+            //TODO - what if more than one success rule [here bellow we use FirstOrDefault()]
+            var firstSuccessEventValue = successEventValues.FirstOrDefault();
+            tax.setTaxRate(firstSuccessEventValue);
+        }
     }
 }

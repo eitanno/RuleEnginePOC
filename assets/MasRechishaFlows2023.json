@@ -64,7 +64,15 @@
                 "ErrorMessage": "One or more adjust rules failed.",
                 "ErrorType": "Error",
                 "RuleExpressionType": "LambdaExpression",
-                "Expression": "input1.landType == \"ExclusiveApt\" AND input1.purchasePrice > 1919155 AND input1.purchasePrice <= 2276360"
+                "Expression": "input1.landType == \"ExclusiveApt\" AND input1.purchasePrice > 1919155 AND input1.purchasePrice <= 2276360",
+                "Actions": {
+                    "OnSuccess": {
+                        "Name": "MasRechishaAction",
+                        "Context": {
+                            "Expression": "input1.purchasePrice * 0.5"
+                        }
+                    }
+                }
             },
             {
                 "RuleName": "ExclusiveAptBracket3",
