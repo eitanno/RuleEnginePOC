@@ -26,7 +26,7 @@ public abstract class GenericEngine
         };
         microsoftRuleEngine = new RulesEngine.RulesEngine(workflows, reSettings);
     }
-    
+
     public Workflow[] getWorkflows()
     {
         var content = System.IO.File.ReadAllText(Path.Combine("..", "assets", getFlowsFileName()));
@@ -68,6 +68,16 @@ public abstract class GenericEngine
             }
         }
         return false;
+    }
+
+    protected RuleResultTree? getRule(List<RuleResultTree> response)
+    {
+        var successResponses = response.Where(r => r.IsSuccess == true);
+        if (successResponses.Any())
+        {
+            return successResponses.FirstOrDefault();
+        }
+        return null;
     }
     protected void resolveTaxFromRules(List<RuleResultTree> response, TaxResult tax)
     {

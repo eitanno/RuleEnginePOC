@@ -56,7 +56,19 @@
                 "ErrorMessage": "One or more adjust rules failed.",
                 "ErrorType": "Error",
                 "RuleExpressionType": "LambdaExpression",
-                "Expression": "input1.landType == \"ExclusiveApt\" AND input1.purchasePrice <= 1919155"
+                "Expression": "input1.landType == \"ExclusiveApt\" AND input1.purchasePrice <= 1919155",
+                "Actions": {
+                    "OnSuccess": {
+                        "Name": "OutputExpression",
+                        "Context": {
+                            "Expression": "input1.purchasePrice * 0",
+                            "Brackets": "1919155",
+                            "Percentage": "0%",
+                            "BracketsTax": "X",
+                            "BracketsNum": 0
+                        }
+                    }
+                }
             },
             {
                 "RuleName": "ExclusiveAptBracket2",
@@ -67,9 +79,13 @@
                 "Expression": "input1.landType == \"ExclusiveApt\" AND input1.purchasePrice > 1919155 AND input1.purchasePrice <= 2276360",
                 "Actions": {
                     "OnSuccess": {
-                        "Name": "MasRechishaAction",
+                        "Name": "OutputExpression",
                         "Context": {
-                            "Expression": "input1.purchasePrice * 0.5"
+                            "Expression": "(input1.purchasePrice - 1919155) * 0.035",
+                            "Brackets": "1919155,2276360",
+                            "Percentage": "0%,3.5%",
+                            "BracketsTax": "0,X",
+                            "BracketsNum": 1
                         }
                     }
                 }
@@ -80,7 +96,19 @@
                 "ErrorMessage": "One or more adjust rules failed.",
                 "ErrorType": "Error",
                 "RuleExpressionType": "LambdaExpression",
-                "Expression": "input1.landType == \"ExclusiveApt\" AND input1.purchasePrice > 2276360 AND input1.purchasePrice <= 5872725"
+                "Expression": "input1.landType == \"ExclusiveApt\" AND input1.purchasePrice > 2276360 AND input1.purchasePrice <= 5872725",
+                "Actions": {
+                    "OnSuccess": {
+                        "Name": "OutputExpression",
+                        "Context": {
+                            "Expression": "(input1.purchasePrice - 2276360) * 0.05",
+                            "Brackets": "1919155,2276360,5872725",
+                            "Percentage": "0%,3.5%,5%",
+                            "BracketsTax": "0,12502,X",
+                            "BracketsNum": 2
+                        }
+                    }
+                }
             },
             {
                 "RuleName": "ExclusiveAptBracket4",
@@ -88,7 +116,19 @@
                 "ErrorMessage": "One or more adjust rules failed.",
                 "ErrorType": "Error",
                 "RuleExpressionType": "LambdaExpression",
-                "Expression": "input1.landType == \"ExclusiveApt\" AND input1.purchasePrice > 5872725 AND input1.purchasePrice <= 19575755"
+                "Expression": "input1.landType == \"ExclusiveApt\" AND input1.purchasePrice > 5872725 AND input1.purchasePrice <= 19575755",
+                "Actions": {
+                    "OnSuccess": {
+                        "Name": "OutputExpression",
+                        "Context": {
+                            "Expression": "(input1.purchasePrice - 5872725) * 0.08",
+                            "Brackets": "1919155,2276360,5872725,19575755",
+                            "Percentage": "0%,3.5%,5%,8%",
+                            "BracketsTax": "0,12502,179818,X",
+                            "BracketsNum": 3
+                        }
+                    }
+                }
             },
             {
                 "RuleName": "ExclusiveAptBracket5",
@@ -96,7 +136,19 @@
                 "ErrorMessage": "One or more adjust rules failed.",
                 "ErrorType": "Error",
                 "RuleExpressionType": "LambdaExpression",
-                "Expression": "input1.landType == \"ExclusiveApt\" AND input1.purchasePrice > 19575755"
+                "Expression": "input1.landType == \"ExclusiveApt\" AND input1.purchasePrice > 19575755",
+                "Actions": {
+                    "OnSuccess": {
+                        "Name": "OutputExpression",
+                        "Context": {
+                            "Expression": "(input1.purchasePrice - 19575755) * 0.1",
+                            "Brackets": "1919155,2276360,5872725,19575755,∞",
+                            "Percentage": "0%,3.5%,5%,8%,10%",
+                            "BracketsTax": "0,12502,179818,1096242,X",
+                            "BracketsNum": 4
+                        }
+                    }
+                }
             }
         ]
     },

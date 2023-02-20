@@ -10,6 +10,11 @@ using Newtonsoft.Json.Linq;
 
 namespace RE.Api.Controllers;
 
+public class MyObject
+{
+    public Double Sum { get; set; }
+    public List<BracketsTax> BracketsTax { get; set; }
+}
 
 [ApiController]
 [Route("purchasetax")]
@@ -42,7 +47,7 @@ public class MasRechishaController : ControllerBase
 
     [HttpPost(Name = "SetExecuteAllRules")]
     [Route("executeallrules")]
-    public IActionResult SetAsyn([FromBody] Object[] jsonInput)
+    public List<MyObject> SetAsyn([FromBody] Object[] jsonInput)
     {
         var inputs = jsonInput
             .Select(ji => JsonConvert.
@@ -50,13 +55,17 @@ public class MasRechishaController : ControllerBase
             ).ToList();
 
         MasRechishaEngine engine = new MasRechishaEngine();
-        List<Task<double>> tasks = new List<Task<double>>();
+        List<MyObject> tasks = new List<MyObject>();
         inputs.ForEach(i =>
         {
-            tasks.Add(engine.run(i));
+            MyObject myObject = new MyObject();
+            TaxResult tax = engine.run(i).Result;
+            myObject.BracketsTax = tax.getBracketsTax();
+            myObject.Sum = tax.sumOfBackets;
+            tasks.Add(myObject);
         });
 
-        return Ok(tasks);
+        return tasks;
     }
 
 }
