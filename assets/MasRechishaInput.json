@@ -3,12 +3,14 @@
         "name": "David",
         "landType": "NonResidential",
         "hasConstruction": true,
+        "purchasePrice": 2435000,
         "exemptType": "None"
     },
     {
         "name": "Rina",
         "landType": "NonResidential",
         "hasConstruction": false,
+        "purchasePrice": 2435000,
         "exemptType": "CarAccident"
     },
     {

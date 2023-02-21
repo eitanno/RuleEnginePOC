@@ -21,26 +21,24 @@ public class MasRechishaEngine : GenericEngine
         result = resolveTaxFromRules(taxResponse, tax);
         
 
-        List<RuleResultTree> discountResponse = await microsoftRuleEngine.ExecuteAllRulesAsync("Discount", input);
+        List<RuleResultTree> discountResponse = await microsoftRuleEngine.ExecuteAllRulesAsync("DiscountAdditionaAndHighExclusive", input);
         if (hasSuccesRule(discountResponse))
         {
             result = resolveTaxFromRules(discountResponse, tax);
         }
 
-        List<RuleResultTree> specialFixRateResponse = await microsoftRuleEngine.ExecuteAllRulesAsync("SpecialFixRate", input);
+        List<RuleResultTree> specialFixRateResponse = await microsoftRuleEngine.ExecuteAllRulesAsync("DiscountLowExclusive", input);
         if (hasSuccesRule(specialFixRateResponse))
         {
             result = resolveTaxFromRules(specialFixRateResponse, tax);
         }
 
-        presentTaxTable(tax, result);
-        
-        Console.WriteLine(input.FirstOrDefault(x => x.Key == "name").Value +
-        " taxRate is " + tax.getTaxRate() + ",      from rule? :" + tax.IsResolvedFromRule());
+        string summary = presentTaxTable(tax, result);    
+        Console.WriteLine(input.FirstOrDefault(x => x.Key == "name").Value + "\r\n" + summary + "\r\n");
         return tax;
     }
 
-    private void presentTaxTable(TaxResult tax, RuleResultTree? result)
+    private string? presentTaxTable(TaxResult tax, RuleResultTree? result)
     {
         if (result != null && result.Rule.Actions != null && result.Rule.Actions.OnSuccess != null && result.Rule.Actions.OnSuccess.Context["Brackets"] != null)
         {
@@ -55,14 +53,16 @@ public class MasRechishaEngine : GenericEngine
             for (int i = 0; i < size; i++)
             {
                 tax.addBracketsTax(i, purchaseBrackets[i], percentageBrackets[i], taxSumBrackets[i]);
-                s = s + "Index: " + i + " Till: " + purchaseBrackets[i] + " Percentage: " + percentageBrackets[i] + " Should pay: " + taxSumBrackets[i] + ";";
+                s = s + "Index: " + i + " Till: " + purchaseBrackets[i] + " Percentage: " + percentageBrackets[i] + " Should pay: " + taxSumBrackets[i] + ";"+ "\r\n";
                 taxToPay = taxToPay + Convert.ToDouble(taxSumBrackets[i]);
             }
 
-            s = s + " Sum: " + taxToPay;
+            s = s + "****SUM TAX TO PAY: " + taxToPay;
             tax.sumOfBackets = taxToPay;
             tax.setBracketsTaxRate(s);
+            return s;
         }
+        return null;
     }
 
     // The workflow file name
