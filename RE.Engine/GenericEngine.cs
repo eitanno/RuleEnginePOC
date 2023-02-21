@@ -70,6 +70,7 @@ public abstract class GenericEngine
         return false;
     }
 
+/*
     protected RuleResultTree? getRule(List<RuleResultTree> response)
     {
         var successResponses = response.Where(r => r.IsSuccess == true);
@@ -79,17 +80,18 @@ public abstract class GenericEngine
         }
         return null;
     }
-    protected void resolveTaxFromRules(List<RuleResultTree> response, TaxResult tax)
+    */
+    protected RuleResultTree? resolveTaxFromRules(List<RuleResultTree> response, TaxResult tax)
     {
-
-        var successResponses = response.Where(r => r.IsSuccess == true);
-
-        var successEventValues = successResponses.Select(r => Convert.ToDouble(r.Rule.SuccessEvent));
-        if (successEventValues.Any())
+        RuleResultTree? result;
+        IEnumerable<RuleResultTree> successResponses = response.Where(r => r.IsSuccess == true);
+        if (successResponses.Any())
         {
             //TODO - what if more than one success rule [here bellow we use FirstOrDefault()]
-            var firstSuccessEventValue = successEventValues.FirstOrDefault();
-            tax.setTaxRate(firstSuccessEventValue);
+            result = successResponses.FirstOrDefault();
+            tax.setTaxRate(Convert.ToDouble(result.Rule.SuccessEvent));
+            return result;
         }
+        return null;
     }
 }
