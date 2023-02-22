@@ -25,11 +25,11 @@
         "purchasePrice": 6500000,
         "exemptType": "IDFDisabledExclusive"
     },
-    {
+    {  
         "name": "Yaccov",
         "landType": "ExclusiveApt",
-        "purchasePrice": 1900000,
-        "exemptType": "None"
+        "purchasePrice": 4000000,
+        "exemptType": "Blind"
     },
     {
         "name": "Hallel",

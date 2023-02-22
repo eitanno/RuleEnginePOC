@@ -7,16 +7,18 @@ namespace RE.Engine;
 public class MasRechishaEngine : GenericEngine
 {
 
+
     public MasRechishaEngine() : base()
     {
-
     }
 
     async public Task<TaxResult> run(ExpandoObject input)
     {
-        RuleResultTree? result;
+        MasRechishaTaxBrackets taxBrackets = new MasRechishaTaxBrackets();
+        List<RuleResultTree> loadedBrackets = await microsoftRuleEngine.ExecuteAllRulesAsync("GLOBAL_BRCAKETS", taxBrackets);
+    
         TaxResult tax = new TaxResult();
-
+        RuleResultTree? result;
         List<RuleResultTree> taxResponse = await microsoftRuleEngine.ExecuteAllRulesAsync("TaxRate", input);
         result = resolveTaxFromRules(taxResponse, tax);
         
