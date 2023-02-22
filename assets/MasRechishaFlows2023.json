@@ -726,7 +726,7 @@
                 "ErrorMessage": "One or more adjust rules failed.",
                 "ErrorType": "Error",
                 "RuleExpressionType": "LambdaExpression",
-                "Expression": "input1.landType == \"AdditionalApt\" AND input1.exemptType == \"NewImmigrant\" And input1.purchasePrice <= 1928220 ",
+                "Expression": "input1.landType != \"NonResidential\" AND input1.exemptType == \"NewImmigrant\" And input1.purchasePrice <= 1928220 ",
                 "Actions": {
                     "OnSuccess": {
                         "Name": "OutputExpression",
@@ -746,7 +746,7 @@
                 "ErrorMessage": "One or more adjust rules failed.",
                 "ErrorType": "Error",
                 "RuleExpressionType": "LambdaExpression",
-                "Expression": "input1.landType == \"AdditionalApt\" AND input1.exemptType == \"NewImmigrant\" And input1.purchasePrice > 1928220 ",
+                "Expression": "input1.landType != \"NonResidential\" AND input1.exemptType == \"NewImmigrant\" And input1.purchasePrice > 1928220 ",
                 "Actions": {
                     "OnSuccess": {
                         "Name": "OutputExpression",
